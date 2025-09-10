@@ -105,6 +105,7 @@ if prompt := st.chat_input("Type your question here..."):
     st.session_state.messages.append({"role": "assistant", "content": ai_answer})
     st.session_state.get_feedback = True
 
+# feedback code
 if st.session_state.get_feedback:
     st.feedback("thumbs", key="feedback")  # No on_change here initially
     if st.session_state.feedback == 0:
@@ -114,7 +115,6 @@ if st.session_state.get_feedback:
         if st.button("Submit Feedback"):
             if st.session_state.feedback == 1: # 1 means thumbs up
                 print("sudah baik")
-                
             elif st.session_state.feedback == 0: # 0 means thumbs down
                 print(f"terdapat feedback: {st.session_state.feedback_text}")
             payload_feedback = {
