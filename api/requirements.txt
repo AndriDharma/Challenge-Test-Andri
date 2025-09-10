@@ -1,0 +1,11 @@
+fastapi
+google-cloud-bigquery
+google-cloud-storage
+google-genai
+langchain
+langchain-postgres
+psycopg[binary,pool]
+cloud-sql-python-connector[pg8000]
+SQLAlchemy
+google-cloud-secret-manager
+langchain-google-vertexai
