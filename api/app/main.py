@@ -466,6 +466,7 @@ def conversation(data_input:Chat_Data):
     else:
         output = blob.download_as_text()
         chat_history_json = json.loads(output)
+        # manage memory
         history = []
         for history_temp in chat_history_json['chat_history']:
             history.append(
@@ -497,10 +498,26 @@ def conversation(data_input:Chat_Data):
         response = chat.send_message(data_input.user_input)
         # managing chat history into json for dump into gcs
         chat_history_list = []
-        for chat_history_single in chat.get_history():
-            if chat_history_single.parts[0].text != None:
-                chat_history_temp ={"chat":chat_history_single.parts[0].text,
-                                    "role":chat_history_single.role}
+        for i in range(len(chat.get_history())):
+            if chat.get_history()[i].parts[0].text != None:
+                # check if there's any historical feedback or not
+                # using try because it's a local variable
+                try:
+                    if 'feedback_good_or_not' in chat_history_json['chat_history'][i]:
+                        feedback_good_or_not = chat_history_json['chat_history'][i]['feedback_good_or_not']
+                        feedback_text = chat_history_json['chat_history'][i]['feedback_text']
+                    else:
+                        feedback_good_or_not = 2 # default feedback
+                        feedback_text = "" # default feedback
+                # set to default
+                except:
+                        feedback_good_or_not = 2 # default feedback
+                        feedback_text = "" # default feedback                    
+                chat_history_temp ={"chat":chat.get_history()[i].parts[0].text,
+                                    "role":chat.get_history()[i].role,
+                                    "feedback_good_or_not": feedback_good_or_not,
+                                    "feedback_text": feedback_text
+                                    }
                 chat_history_list.append(chat_history_temp)
             else:
                 continue

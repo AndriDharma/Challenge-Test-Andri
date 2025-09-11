@@ -108,9 +108,10 @@ if prompt := st.chat_input("Type your question here..."):
 # feedback code
 if st.session_state.get_feedback:
     st.feedback("thumbs", key="feedback")  # No on_change here initially
-    if st.session_state.feedback == 0:
+    if (st.session_state.feedback == 0) or (st.session_state.feedback ==1):
+        st.session_state.feedback_text = ""
         # Text area is better for feedback, and we load/save the value
-        st.session_state.feedback_text = st.text_area("Write your feedback here", value=st.session_state.feedback_text, placeholder="feedback")
+        st.session_state.feedback_text = st.text_area("Write your feedback here", value=st.session_state.feedback_text, placeholder="")
     if (st.session_state.feedback == 0) or (st.session_state.feedback ==1):
         if st.button("Submit Feedback"):
             if st.session_state.feedback == 1: # 1 means thumbs up
