@@ -1,5 +1,3 @@
-Of course\! Here is the content formatted as a Markdown file suitable for a GitHub repository's `README.md`.
-
 -----
 
 # Internal Agentic LLM Chatbot
